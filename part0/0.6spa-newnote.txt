@@ -13,4 +13,4 @@ user types new note and clicks 'submit'
 browser -> server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
 server --> browser: application/json
 
--> the whole page doesn't reload
+-> the whole page doesn't reload because of the preventDefault() method
