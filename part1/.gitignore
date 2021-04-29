@@ -25,8 +25,3 @@ yarn-error.log*
 
 /public
 /src
-App.js
-index.js
-package-lock.json
-package.json
-README.md
