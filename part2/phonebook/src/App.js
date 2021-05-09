@@ -4,16 +4,42 @@ const Person = ({ person }) => {
   return <li >{person.name} {person.number}</li>;
 };
 
+const Filter = ({showAll, handleFilter}) => {
+  return <p>filter shown with <input value={showAll} onChange={handleFilter}/></p>
+
+}
+
+const PersonForm = ({addName, newName, handleNewName, newNumber, handleNewNumber}) => {
+  return (
+    <form onSubmit={addName}>
+        <div>
+          name: <input value={newName} onChange={handleNewName} />
+        </div>
+        <div>
+          number: <input value={newNumber} onChange={handleNewNumber} />
+        </div>
+        <div>
+          <button type="submit">add</button>
+        </div>
+      </form>
+  )
+}
+
+const Persons = ({contactsToShow}) => {
+  return (
+    <ul style={{listStyle:'none', padding:'0px'}}>
+      {contactsToShow.map(person => 
+          <Person key={person.name} person={person} />
+        )}
+      </ul>
+  )
+}
+
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-123456' },
-    { name: 'Ada Lovelace', number: '39-44-5323523' },
-    { name: 'Dan Abramov', number: '12-43-234345' },
-    { name: 'Mary Poppendieck', number: '39-23-6423122' }
-  ]);
+  const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState('');
-  const [showAll, setShowAll] = useState(true)
+  const [showAll, setShowAll] = useState('')
 
   const checkDuplicate = (props) => {
     console.log("checkDuplicate", props.name);
@@ -25,6 +51,14 @@ const App = () => {
  
     
   };
+
+  const contactsToShow = persons.filter(person => person.name.toLowerCase().includes(`${showAll}`.toLowerCase()))
+
+
+    const handleFilter = (event) => {
+      setShowAll(event.target.value)
+    }
+
 
   const addName = (event) => {
     event.preventDefault();
@@ -50,28 +84,17 @@ const App = () => {
     setNewNumber(event.target.value);
   };
 
+  
+
   return (
     <div>
       <h2>Phonebook</h2>
-      <p>filter shown with</p>
+      <Filter showAll={showAll} handleFilter={handleFilter} />
       <h2>Add new contact</h2>
-      <form onSubmit={addName}>
-        <div>
-          name: <input value={newName} onChange={handleNewName} />
-        </div>
-        <div>
-          number: <input value={newNumber} onChange={handleNewNumber} />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <PersonForm newName={newName} newNumber={newNumber} addName={addName} handleNewName={handleNewName} handleNewNumber={handleNewNumber} />
       <h2>Numbers</h2>
-      <ul style={{listStyle:'none', padding:'0px'}}>
-        {persons.map((person) => (
-          <Person key={person.name} person={person} />
-        ))}
-      </ul>
+      <Persons contactsToShow={contactsToShow} />
+      
     </div>
   );
 };
