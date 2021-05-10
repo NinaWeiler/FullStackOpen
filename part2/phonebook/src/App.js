@@ -53,7 +53,7 @@ const App = () => {
       })
   }, [])
 
-  console.log('render', persons.length, 'notes')
+  console.log('render', persons.length, 'persons')
 
   const checkDuplicate = (props) => {
     console.log("checkDuplicate", props.name);
