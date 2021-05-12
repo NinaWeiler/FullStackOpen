@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
+import personService from './services/persons';
 
+const Button = (props) => {
 
-const Person = ({ person }) => {
-  return <li >{person.name} {person.number}</li>;
+  return <button onClick={props.onClick}>{props.text}</button>;
+};
+
+const Person = ({ person, handleRemove }) => {
+  console.log('personobject', person)
+  console.log(person.id)
+  return <li >{person.name} {person.number} <Button onClick={() => {handleRemove(person.id)}} text="delete"/></li>;
 };
 
 const Filter = ({showAll, handleFilter}) => {
@@ -27,11 +33,11 @@ const PersonForm = ({addName, newName, handleNewName, newNumber, handleNewNumber
   )
 }
 
-const Persons = ({contactsToShow}) => {
+const Persons = ({contactsToShow, handleRemove}) => {
   return (
     <ul style={{listStyle:'none', padding:'0px'}}>
       {contactsToShow.map(person => 
-          <Person key={person.name} person={person} />
+          <Person key={person.name} person={person} handleRemove={handleRemove}/>
         )}
       </ul>
   )
@@ -44,51 +50,46 @@ const App = () => {
   const [showAll, setShowAll] = useState('')
 
   useEffect(() => {
-    console.log('effect')
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        console.log('promise fulfilled')
-        setPersons(response.data)
-      })
+    personService
+    .getAll()
+    .then(initialPersons => {
+      setPersons(initialPersons)
+    })
+    .catch(error => {
+      console.log('fetchdata', error)
+    })
   }, [])
 
   console.log('render', persons.length, 'persons')
 
-  const checkDuplicate = (props) => {
-    console.log("checkDuplicate", props.name);
-    const result = persons.find(({name}) => name  === props.name) 
-    if (result) {
-      alert(`${props.name} is already added to phonebook`);
-    }
-    return (result === undefined) ? false : true 
- 
     
-  };
-
-  const contactsToShow = persons.filter(person => person.name.toLowerCase().includes(`${showAll}`.toLowerCase()))
-
-
-    const handleFilter = (event) => {
-      setShowAll(event.target.value)
-    }
-
 
   const addName = (event) => {
     event.preventDefault();
     console.log("button clicked", event.target);
-    const nameObject = {
+    const personObject = {
       name: newName,
       number: newNumber,
     };
-    if (!checkDuplicate(nameObject)){
-    setPersons(persons.concat(nameObject));
+    if (!checkDuplicate(personObject)){
+      personService
+      .create(personObject)
+      .then(returnedPerson => {
+        setPersons(persons.concat(returnedPerson))
+        setNewName("");
+        setNewNumber('');
+      })
+      .catch(error => {
+        console.log('addName', error)
+      })
     }
-    setNewName("");
-    setNewNumber('');
+
     
     console.log("persons", persons);
   };
+
+  
+  
 
   const handleNewName = (event) => {
     setNewName(event.target.value);
@@ -98,6 +99,42 @@ const App = () => {
     setNewNumber(event.target.value);
   };
 
+  const handleFilter = (event) => {
+    setShowAll(event.target.value)
+  }
+
+  const checkDuplicate = (props) => {
+    console.log("checkDuplicate", props.name);
+    const result = persons.find(({name}) => name  === props.name) 
+    if (result) {
+      alert(`${props.name} is already added to phonebook`);
+    }
+    return (result === undefined) ? false : true 
+
+  };
+
+  const contactsToShow = persons.filter(person => person.name.toLowerCase().includes(`${showAll}`.toLowerCase()))
+
+  const handleRemove = (id) => {
+    console.log('handleREmove', id)
+    const person = persons.filter(p => p.id === id)
+    console.log('persons', persons)
+    console.log('person', person[0].name)
+    
+    if(window.confirm(`Delete ${person[0].name}?`)) {
+      personService
+      .remove(id)
+      .then(() => {
+
+        setPersons(persons.filter(person => person.id !== id))
+      })
+      .catch(error => {
+        console.log('error deleting', error)
+      })
+    };
+  
+  } 
+  
   
 
   return (
@@ -107,7 +144,7 @@ const App = () => {
       <h2>Add new contact</h2>
       <PersonForm newName={newName} newNumber={newNumber} addName={addName} handleNewName={handleNewName} handleNewNumber={handleNewNumber} />
       <h2>Numbers</h2>
-      <Persons contactsToShow={contactsToShow} />
+      <Persons contactsToShow={contactsToShow} handleRemove={handleRemove} />
       
     </div>
   );
