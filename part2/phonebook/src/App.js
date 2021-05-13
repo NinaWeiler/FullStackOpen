@@ -1,47 +1,7 @@
 import React, { useState, useEffect } from "react";
 import personService from './services/persons';
+import {Filter, PersonForm, Persons} from './components/components';
 
-const Button = (props) => {
-
-  return <button onClick={props.onClick}>{props.text}</button>;
-};
-
-const Person = ({ person, handleRemove }) => {
-  console.log('personobject', person)
-  console.log(person.id)
-  return <li >{person.name} {person.number} <Button onClick={() => {handleRemove(person.id)}} text="delete"/></li>;
-};
-
-const Filter = ({showAll, handleFilter}) => {
-  return <p>filter shown with <input value={showAll} onChange={handleFilter}/></p>
-
-}
-
-const PersonForm = ({addName, newName, handleNewName, newNumber, handleNewNumber}) => {
-  return (
-    <form onSubmit={addName}>
-        <div>
-          name: <input value={newName} onChange={handleNewName} />
-        </div>
-        <div>
-          number: <input value={newNumber} onChange={handleNewNumber} />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
-  )
-}
-
-const Persons = ({contactsToShow, handleRemove}) => {
-  return (
-    <ul style={{listStyle:'none', padding:'0px'}}>
-      {contactsToShow.map(person => 
-          <Person key={person.name} person={person} handleRemove={handleRemove}/>
-        )}
-      </ul>
-  )
-}
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -72,6 +32,8 @@ const App = () => {
       number: newNumber,
     };
     if (!checkDuplicate(personObject)){
+      console.log('personObject',personObject)
+
       personService
       .create(personObject)
       .then(returnedPerson => {
@@ -104,14 +66,30 @@ const App = () => {
   }
 
   const checkDuplicate = (props) => {
-    console.log("checkDuplicate", props.name);
-    const result = persons.find(({name}) => name  === props.name) 
-    if (result) {
-      alert(`${props.name} is already added to phonebook`);
-    }
-    return (result === undefined) ? false : true 
+    console.log("checkDuplicate", props);
+    console.log('duplicate persons', persons)
+    const updatedPerson = persons.find(p => p.name.toLowerCase()  === props.name.toLowerCase()) 
+    if (updatedPerson) {
+      if(window.confirm(`${props.name} is already added to phonebook, replace the old number with a new one?`)) {
+        const id = updatedPerson.id
+        const changedPerson = {...updatedPerson, number: props.number}
 
+        personService
+        .update(id, changedPerson)
+        .then(returnedPerson => {setPersons(persons.map(p => p.id !== id ? p : returnedPerson))
+          setNewName("");
+          setNewNumber('');})
+        .catch(error => console.log('err updating', error))
+      } else {
+        setNewName("");
+        setNewNumber('');
+      }
+    }
+    return (updatedPerson === undefined) ? false : true 
   };
+
+
+ 
 
   const contactsToShow = persons.filter(person => person.name.toLowerCase().includes(`${showAll}`.toLowerCase()))
 
