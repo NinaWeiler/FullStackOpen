@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import personService from './services/persons';
-import {Filter, PersonForm, Persons} from './components/components';
+import {Filter, PersonForm, Persons, Notification} from './components/components';
 
 
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState('');
-  const [showAll, setShowAll] = useState('')
+  const [showAll, setShowAll] = useState('');
+  const [message, setMessage] = useState(null)
 
   useEffect(() => {
     personService
@@ -40,6 +41,8 @@ const App = () => {
         setPersons(persons.concat(returnedPerson))
         setNewName("");
         setNewNumber('');
+        setMessage(`Added ${newName} to the phonebook`)
+        setTimeout(() => {setMessage(null)}, 3000)
       })
       .catch(error => {
         console.log('addName', error)
@@ -78,7 +81,10 @@ const App = () => {
         .update(id, changedPerson)
         .then(returnedPerson => {setPersons(persons.map(p => p.id !== id ? p : returnedPerson))
           setNewName("");
-          setNewNumber('');})
+          setNewNumber('');
+          setMessage(`Changed ${changedPerson.name}'s number to ${changedPerson.number}`)
+        setTimeout(() => {setMessage(null)}, 3000)
+        })
         .catch(error => console.log('err updating', error))
       } else {
         setNewName("");
@@ -118,6 +124,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={message}/>
       <Filter showAll={showAll} handleFilter={handleFilter} />
       <h2>Add new contact</h2>
       <PersonForm newName={newName} newNumber={newNumber} addName={addName} handleNewName={handleNewName} handleNewNumber={handleNewNumber} />
