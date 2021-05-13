@@ -1,12 +1,12 @@
 import React from 'react';
 import '../index.css'
 
-export const Notification = ({message}) => {
+export const Notification = ({message, messageStyle}) => {
     if (message === null) {
         return null
     }
     return (
-        <div className="success">
+        <div className={messageStyle}>
             {message}
         </div>
     )

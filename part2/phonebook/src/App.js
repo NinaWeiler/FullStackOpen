@@ -8,7 +8,9 @@ const App = () => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState('');
   const [showAll, setShowAll] = useState('');
-  const [message, setMessage] = useState(null)
+  const [message, setMessage] = useState(null);
+  const [messageStyle, setMessageStyle] = useState(null);
+  
 
   useEffect(() => {
     personService
@@ -41,8 +43,9 @@ const App = () => {
         setPersons(persons.concat(returnedPerson))
         setNewName("");
         setNewNumber('');
-        setMessage(`Added ${newName} to the phonebook`)
-        setTimeout(() => {setMessage(null)}, 3000)
+        setMessageStyle("success");
+        setMessage(`Added ${newName} to the phonebook`);
+        setTimeout(() => {setMessage(null)}, 3000);
       })
       .catch(error => {
         console.log('addName', error)
@@ -82,14 +85,17 @@ const App = () => {
         .then(returnedPerson => {setPersons(persons.map(p => p.id !== id ? p : returnedPerson))
           setNewName("");
           setNewNumber('');
+          setMessageStyle("success")
           setMessage(`Changed ${changedPerson.name}'s number to ${changedPerson.number}`)
-        setTimeout(() => {setMessage(null)}, 3000)
+          setTimeout(() => {setMessage(null)}, 3000)
         })
-        .catch(error => console.log('err updating', error))
-      } else {
+        .catch(error => {
+          console.log('failed to update', error)
+      })
+      } 
+    } else {
         setNewName("");
         setNewNumber('');
-      }
     }
     return (updatedPerson === undefined) ? false : true 
   };
@@ -109,11 +115,15 @@ const App = () => {
       personService
       .remove(id)
       .then(() => {
-
         setPersons(persons.filter(person => person.id !== id))
       })
       .catch(error => {
-        console.log('error deleting', error)
+        console.log('error removing', error);
+        setMessageStyle("error");
+        setMessage(`Information of ${person[0].name} has already been removed from the server`);
+        setTimeout(() => {setMessage(null)}, 3000);
+        setPersons(persons.filter(p => p.id !== id));
+        
       })
     };
   
@@ -124,7 +134,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification message={message}/>
+      <Notification message={message} messageStyle={messageStyle}/>
       <Filter showAll={showAll} handleFilter={handleFilter} />
       <h2>Add new contact</h2>
       <PersonForm newName={newName} newNumber={newNumber} addName={addName} handleNewName={handleNewName} handleNewNumber={handleNewNumber} />

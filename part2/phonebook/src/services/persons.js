@@ -4,6 +4,12 @@ const baseUrl = 'http://localhost:3001/persons'
 const getAll = () => {
   const request = axios.get(baseUrl)
   return request.then(response => response.data)
+  //const nonExisting = {
+  //  name: "Danny",
+  //  number: 999,
+  //  id: 90,
+  //}
+  //return request.then(response => response.data.concat(nonExisting))
 }
 
 const create = newObject => {
