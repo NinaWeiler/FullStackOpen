@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import personService from './services/persons';
 import {Filter, PersonForm, Persons, Notification} from './components/components';
 
-
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");

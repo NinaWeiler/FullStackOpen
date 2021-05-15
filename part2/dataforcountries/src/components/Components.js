@@ -58,7 +58,7 @@ const Weather = ({country}) => {
       <h1>{country.name}</h1>
       <p>capital {country.capital}</p>
       <p>population {country.population}</p>
-      <h2>languages</h2>
+      <h2>Spoken languages</h2>
       <ul>
         {country.languages.map(languages => 
         <li key={languages.name}>{languages.name}</li>
@@ -105,7 +105,7 @@ export const Countries = ({countriesToShow, showAll}) => {
      (countriesToShow.length === 1) {
       return <CountryInfo country={countriesToShow[0]}/>
     } else if
-     (countriesToShow.length > 3) {
+     (countriesToShow.length >= 10) {
       return "Too many matches, specify another filter"
     }
     return (

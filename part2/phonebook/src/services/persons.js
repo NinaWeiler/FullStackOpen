@@ -30,4 +30,4 @@ const update = (id, newObject) => {
 } 
 
 
-export default { getAll, create, update, remove };
+export default { getAll, create, update, remove }
