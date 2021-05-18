@@ -15,6 +15,7 @@ const App = () => {
     personService
     .getAll()
     .then(initialPersons => {
+      console.log('initialpersons', initialPersons)
       setPersons(initialPersons)
     })
     .catch(error => {
@@ -47,7 +48,9 @@ const App = () => {
         setTimeout(() => {setMessage(null)}, 3000);
       })
       .catch(error => {
-        console.log('addName', error)
+        setMessageStyle("error");
+        setMessage(`${error.response.data.error}`);
+        setTimeout(() => {setMessage(null)}, 3000);
       })
     }
 
@@ -74,14 +77,17 @@ const App = () => {
     console.log("checkDuplicate", props);
     console.log('duplicate persons', persons)
     const updatedPerson = persons.find(p => p.name.toLowerCase()  === props.name.toLowerCase()) 
+
     if (updatedPerson) {
       if(window.confirm(`${props.name} is already added to phonebook, replace the old number with a new one?`)) {
         const id = updatedPerson.id
+        console.log('id', id)
+
         const changedPerson = {...updatedPerson, number: props.number}
 
         personService
         .update(id, changedPerson)
-        .then(returnedPerson => {setPersons(persons.map(p => p.id !== id ? p : returnedPerson))
+        .then(returnedPerson => {setPersons(persons.map(p => p.id !== id ? p : returnedPerson ))
           setNewName("");
           setNewNumber('');
           setMessageStyle("success")

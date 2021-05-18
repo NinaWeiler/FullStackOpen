@@ -18,8 +18,8 @@ const Button = (props) => {
   };
   
   const Person = ({ person, handleRemove }) => {
-    console.log('Person', person)
-    console.log(person.id)
+    //console.log('Person', person)
+    //console.log(person.id)
     return <li >{person.name} {person.number} <Button onClick={() => {handleRemove(person.id)}} text="delete"/></li>;
   };
   
@@ -45,10 +45,11 @@ const Button = (props) => {
   }
   
  export const Persons = ({contactsToShow, handleRemove}) => {
+   console.log('contactstoshow', contactsToShow)
     return (
       <ul style={{listStyle:'none', padding:'0px'}}>
         {contactsToShow.map(person => 
-            <Person key={person.name} person={person} handleRemove={handleRemove}/>
+            <Person key={person.id} person={person} handleRemove={handleRemove}/>
           )}
         </ul>
     )

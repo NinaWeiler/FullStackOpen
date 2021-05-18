@@ -25,6 +25,7 @@ const remove = (id) => {
 
 
 const update = (id, newObject) => {
+  console.log('personsjs id', id)
   const request = axios.put(`${baseUrl}/${id}`, newObject)
   return request.then(response => response.data)
 } 
