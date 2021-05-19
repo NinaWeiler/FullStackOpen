@@ -95,8 +95,10 @@ const App = () => {
           setTimeout(() => {setMessage(null)}, 3000)
         })
         .catch(error => {
-          console.log('failed to update', error)
-      })
+          setMessageStyle("error");
+          setMessage(`${error.response.data.error}`);
+          setTimeout(() => {setMessage(null)}, 3000);
+        })
       } 
     } else {
         setNewName("");
@@ -120,6 +122,9 @@ const App = () => {
       personService
       .remove(id)
       .then(() => {
+        setMessageStyle("success")
+        setMessage(`Removed ${person[0].name} from the phonebook`)
+        setTimeout(() => {setMessage(null)}, 3000)
         setPersons(persons.filter(person => person.id !== id))
       })
       .catch(error => {
