@@ -18,6 +18,11 @@ mongoose
 
 
 *package.json:*
+"scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "\"echo \\ \"Error: no test specified\\\" && exit 1\""
+  },
 
 
 ## Connecting to MongoDB ##
@@ -42,3 +47,15 @@ mongoose
 run with nodemon:
 ```
 npm run dev 
+
+## Testing ##
+npm install --save-dev jest
+
+*package.json:*
+"test": "jest --verbose"
+// at the end of the file
+ "jest": {
+    "testEnvironment": "node"
+  }
+
+
