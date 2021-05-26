@@ -10,4 +10,19 @@ Content-Type: application/json
 }
 
 ###
+PUT http://localhost:3003/api/blogs/60a8d0a1a624ee6ca4dc40fc
+Content-Type: application/json
+
+{
+    "title": "refactoring code",
+    "author": "nora",
+    "url": "url",
+    "likes": 15
+
+}
+
+###
 GET http://localhost:3003/api/blogs
+
+###
+DELETE http://localhost:3003/api/blogs/60a8d246c17d933c5058f946
