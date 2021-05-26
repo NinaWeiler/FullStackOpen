@@ -11,21 +11,31 @@ blogRouter.get('/', async (request, response) => {
 	response.json(blogs)
 })
 
-blogRouter.post('/', async (request, response, next) => {
+blogRouter.post('/', async (request, response) => {
 	const body = request.body
 	const blog = new Blog({
 		title: body.title,
 		author: body.author,
 		url: body.url,
-		likes: body.likes
+		likes: body.likes ? body.likes : 0,
 	})
 
-	try {
-		const savedBlog = await blog.save()
-		response.json(savedBlog.toJSON())
-	} catch(error) {
-		console.log(error)
+	const savedBlog = await blog.save()
+	response.json(savedBlog)
+})
+
+blogRouter.get('/:id', async (request, response) => {
+	const blog = await Blog.findById(request.params.id)
+	if (blog) {
+		response.json(blog)
+	} else {
+		response.status(404).end()
 	}
+})
+
+blogRouter.delete('/:id', async (request,response) => {
+	await Blog.findByIdAndRemove(request.params.id)
+	response.status(204).end()
 })
 
 /*
