@@ -164,7 +164,6 @@ describe('deletion of blog', () => {
 })
 
 
-
 afterAll(() => {
   mongoose.connection.close()
 })

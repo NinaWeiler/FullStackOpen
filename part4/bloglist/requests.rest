@@ -15,7 +15,7 @@ Content-Type: application/json
 
 {
     "title": "refactoring code",
-    "author": "nora",
+    "author": "nora-lynn",
     "url": "url",
     "likes": 15
 
