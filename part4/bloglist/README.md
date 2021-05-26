@@ -59,3 +59,18 @@ npm install --save-dev jest
   }
 
 
+## Running tests ## 
+Tests use separate test database
+run all tests 
+```
+npm test
+run all tests in specific file
+```
+npm test -- tests/blog_api.test.js
+run test by specific name (block or single test)
+```
+npm test -- -t 'name of test'
+run all tests that contain parameter (e.g. blogs) in their name
+```
+npm test -- -t 'blogs'
+
