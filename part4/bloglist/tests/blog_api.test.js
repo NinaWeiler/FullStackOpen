@@ -5,7 +5,13 @@ const helper = require('./test_helper')
 const app = require('../app')
 const api = supertest(app)
 const Blog = require('../models/blog')
+const config = require('../utils/config')
 
+
+
+beforeAll(async () => {
+    await mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
+})
 
 beforeEach(async () => {
   await Blog.deleteMany({})
@@ -18,7 +24,7 @@ beforeEach(async () => {
 })
 
 
-describe('when initially some notes saved', () => {
+describe('when initially some blogs saved', () => {
 
 
   test('blogs are returned as json', async () => {
