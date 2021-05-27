@@ -3,8 +3,8 @@ Content-Type: application/json
 
 {
     "blogs": [],
-    "username": "kj",
-    "name": "Donnie",
+    "username": "Mila",
+    "name": "",
     "password": "eeeeee"
 }
 ###
@@ -24,10 +24,9 @@ Content-Type: application/json
 
 {
     "title": "refactoring code basics",
-    "author": "heather",
+    "author": "Jack",
     "url": "url",
-    "likes": 8
-
+    "likes": 10
 }
 
 ###
