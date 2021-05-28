@@ -1,7 +1,16 @@
 const blogRouter = require('express').Router()
 const Blog = require('../models/blog')
-const User = require('../models/user')
+//const User = require('../models/user')
+//const jwt = require('jsonwebtoken')
 
+/*
+const getTokenFrom = request => {
+	const authorization = request.get('authorization')
+	if(authorization && authorization.toLowerCase().startsWith('bearer ')) {
+		return authorization.substring(7)
+	}
+	return null
+}
 // /api/blogs
 
 // async/await
@@ -14,8 +23,7 @@ blogRouter.get('/', async (request, response) => {
 
 blogRouter.post('/', async (request, response) => {
 	const body = request.body
-	//const user = await User.findbyId(body.userId)
-	const user = await User.findById('60af801129332a3b3cd45fea')
+	const user = request.user
 	const blog = new Blog({
 		title: body.title,
 		author: body.author,
@@ -42,8 +50,17 @@ blogRouter.get('/:id', async (request, response) => {
 })
 
 blogRouter.delete('/:id', async (request,response) => {
-	await Blog.findByIdAndRemove(request.params.id)
-	response.status(204).end()
+	const user = request.user
+	const blog = await Blog.findById(request.params.id)
+	console.log(user.blogs)
+	if (blog) {
+		// blog.user contains an object, so has to be parsed into string first
+		if (blog.user.toString() !== user._id.toString()) {
+			return response.status(403).json({ error: 'Blog can be deleted only by blog owner' })
+		}
+		await blog.remove()
+		return response.status(204).json({ message: 'blog deleted' })
+	}
 })
 
 blogRouter.put('/:id', async (request, response, next) => {

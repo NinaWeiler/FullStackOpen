@@ -1,9 +1,18 @@
+POST http://localhost:3003/api/login
+Content-Type: application/json
+
+{
+    "username": "Mila",
+    "password": "eeeeee"
+}
+###
+
 POST http://localhost:3003/api/users
 Content-Type: application/json
 
 {
     "blogs": [],
-    "username": "Mila",
+    "username": "Charlieser",
     "name": "",
     "password": "eeeeee"
 }
@@ -21,13 +30,23 @@ GET http://localhost:3003/api/users
 ###
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik1pbGEiLCJpZCI6IjYwYWY3ZGE4NjkxNWRmNGI3MDg5MWNlZCIsImlhdCI6MTYyMjE5NjA5MCwiZXhwIjoxNjIyMTk5NjkwfQ.CbTwaXPnAQcgfwumR9MtMX29j7_9HCqG5OkFkYCyNgY
 
 {
-    "title": "refactoring code basics",
-    "author": "Jack",
+    "title": "code basics",
+    "author": "Amanda ",
     "url": "url",
     "likes": 10
 }
+
+###
+DELETE http://localhost:3003/api/blogs/60b0c151476b750cd07177e3
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik1pbGEiLCJpZCI6IjYwYWY3ZGE4NjkxNWRmNGI3MDg5MWNlZCIsImlhdCI6MTYyMjE5NjA5MCwiZXhwIjoxNjIyMTk5NjkwfQ.CbTwaXPnAQcgfwumR9MtMX29j7_9HCqG5OkFkYCyNgY
+
+###
+DELETE http://localhost:3003/api/blogs/60b095443a715805c4f3699f
+
+
 
 ###
 PUT http://localhost:3003/api/blogs/60a8d0a1a624ee6ca4dc40fc

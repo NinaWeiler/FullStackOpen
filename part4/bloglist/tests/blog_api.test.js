@@ -52,35 +52,7 @@ describe('when initially some blogs saved', () => {
   })
 })
 
-/*
-describe('viewing a specific blog', () => {
-  test('succeeds with a valid id', async () => {
-    const blogsAtStart = await helper.blogsInDb()
-    const blogToView = blogsAtStart[0]
-
-    const resultBlog = await api
-    .get(`/api/notes/${blogToView.id}`)
-    .expect(200)
-    .expect('Content-Type', /application\/json/)
-
-    const processedBlogToView = JSON.parse(JSON.stringify(blogToView))
-    expect(resultBlog.body).toEqual(processedBlogToView)
-  })
-
-  test('fails with statuscode 400 if id invalid', async () => {
-    const invalidID = '837287'
-    await api
-    .get(`/api/blogs/${invalidID}`)
-    .expect(400)
-  })
-  test('fails with statuscode 404 if blog does not exist', async () => {
-    const validNonExistingId = await helper.nonExistingId()
-    await api
-    .get(`/api/blogs/${validNonExistingId}`)
-    .expect(404)
-  })
-})
-*/
+// implement token into tests to make them work
 describe('adding a new blog', () => {
 
   test('a valid blog can be added', async () => {
