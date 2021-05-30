@@ -40,7 +40,6 @@ const tokenExtractor = (request, response, next) => {
 }
 
 const userExtractor = async (request, response, next) => {
-	console.log(request.token)
 	if(request.token) {
 		// eslint-disable-next-line no-undef
 		const decodedToken = jwt.verify(request.token, process.env.SECRET)
@@ -49,14 +48,7 @@ const userExtractor = async (request, response, next) => {
 	next()
 }
 
-/*
-token {
-	username: 'Charlieser',
-	id: '60b099ca67441c2d6caad429',
-	iat: 1622186702,
-	exp: 1622190302
-  }
-*/
+
 module.exports = {
 	requestLogger,
 	unknownEndpoint,

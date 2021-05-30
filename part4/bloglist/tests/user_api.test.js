@@ -40,6 +40,7 @@ describe('when there is initially one user in db', () => {
       .expect(200)
       .expect('Content-Type', /application\/json/)
 
+    console.log(newUser)
     const usersAtEnd = await helper.usersInDb()
     expect(usersAtEnd).toHaveLength(usersAtStart.length + 1)
 

@@ -30,7 +30,18 @@ GET http://localhost:3003/api/users
 ###
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik1pbGEiLCJpZCI6IjYwYWY3ZGE4NjkxNWRmNGI3MDg5MWNlZCIsImlhdCI6MTYyMjE5NjA5MCwiZXhwIjoxNjIyMTk5NjkwfQ.CbTwaXPnAQcgfwumR9MtMX29j7_9HCqG5OkFkYCyNgY
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik1pbGEiLCJpZCI6IjYwYWY3ZGE4NjkxNWRmNGI3MDg5MWNlZCIsImlhdCI6MTYyMjM2MTY5NSwiZXhwIjoxNjIyMzY1Mjk1fQ.4-9ENrPP09oYvUzYOW5DgWnh3_q56e1EyJHO8EycnF0
+
+{
+    "title": "code basics",
+    "author": "Amanda ",
+    "url": "url",
+    "likes": 10
+}
+
+###
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
 
 {
     "title": "code basics",
@@ -49,14 +60,13 @@ DELETE http://localhost:3003/api/blogs/60b095443a715805c4f3699f
 
 
 ###
-PUT http://localhost:3003/api/blogs/60a8d0a1a624ee6ca4dc40fc
+PUT http://localhost:3003/api/blogs/60b3476284913710643d1351
 Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik1pbGEiLCJpZCI6IjYwYWY3ZGE4NjkxNWRmNGI3MDg5MWNlZCIsImlhdCI6MTYyMjM2MTY5NSwiZXhwIjoxNjIyMzY1Mjk1fQ.4-9ENrPP09oYvUzYOW5DgWnh3_q56e1EyJHO8EycnF0
 
 {
-    "title": "refactoring code",
-    "author": "nora-lynn",
-    "url": "url",
-    "likes": 15
+   
+    "likes": 20
 
 }
 
