@@ -33,6 +33,11 @@ const App = () => {
 
   const blogFormRef = useRef()
 
+  useEffect(() => {
+    setBlogs(blogs.sort((a, b) => b.likes - a.likes))
+  }, [blogs]);
+
+
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
@@ -83,6 +88,7 @@ const App = () => {
         )
         setTimeout(() => {setErrorMessage(null)}, 5000)
       })
+    
   }
   
   if (user === null) {
@@ -103,7 +109,6 @@ const App = () => {
       <Togglable buttonLabel="Create new blog" ref={blogFormRef}>
         <BlogForm createBlog={addBlog} />
       </Togglable>
-    
       {blogs.map((blog) => (
         <Blog key={blog.id} blog={blog} blogObject={handleLike} />
       ))}
