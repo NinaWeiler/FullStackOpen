@@ -76,6 +76,17 @@ const App = () => {
         })
   }
 
+  const deleteBlog = (blog) => {
+    if (window.confirm(`Remove blog '${blog.title}' by ${blog.author}?`)){
+    blogService
+    .remove(blog.id)
+    .then(response => {
+      console.log(response)
+      setBlogs(blogs.filter((b) => b.id !== blog.id))
+    })
+  } else { return }
+  }
+
   const handleLike = (id, blogObject) => {
     blogService
       .update(id, blogObject)
@@ -90,6 +101,7 @@ const App = () => {
       })
     
   }
+
   
   if (user === null) {
   return (
@@ -110,7 +122,7 @@ const App = () => {
         <BlogForm createBlog={addBlog} />
       </Togglable>
       {blogs.map((blog) => (
-        <Blog key={blog.id} blog={blog} blogObject={handleLike} />
+        <Blog key={blog.id} blog={blog} blogObject={handleLike} blogToRemove={deleteBlog} user={user.username} />
       ))}
       
       </div>

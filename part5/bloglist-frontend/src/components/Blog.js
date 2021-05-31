@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 
-const Details = ({blog, blogObject}) => {
+const Details = ({blog, blogObject, user, blogToRemove}) => {
 
   const handleLike = (event) => {
     const updatedBlog = { ...blog, likes: blog.likes + 1}
     blogObject(blog.id, updatedBlog)
+  }
+
+  const handleDelete = () => {
+    blogToRemove(blog)
   }
 
   return (
@@ -12,12 +16,13 @@ const Details = ({blog, blogObject}) => {
     <p>{blog.url}</p>
     <p>{blog.likes}<button onClick={handleLike}>likes</button></p>
     <p>{blog.user.username}</p>
+    {user !== blog.user.username ? null : <button onClick={handleDelete}>remove</button> }
     </>
   )
 
 }
 
-const Blog = ({blog, blogObject}) => {
+const Blog = ({blog, blogObject, blogToRemove, user}) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -41,7 +46,7 @@ const Blog = ({blog, blogObject}) => {
   <div style={blogStyle}>
     <p>{blog.title} {blog.author} <button onClick={toggleVisibility} text={text}>{text}</button></p>
     {!detailsVisible ? null 
-    : <Details blog={blog} blogObject={blogObject} /> }
+    : <Details blog={blog} blogObject={blogObject} blogToRemove={blogToRemove} user={user}/> }
   </div> 
   ) 
 }
