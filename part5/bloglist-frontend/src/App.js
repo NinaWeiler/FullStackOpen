@@ -11,8 +11,6 @@ import './app.css'
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
-
-  //const [likes, setLikes] = useState('');
   const [successMessage, setSuccessMessage] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [username, setUsername] = useState([]);
@@ -72,6 +70,20 @@ const App = () => {
           
         })
   }
+
+  const handleLike = (id, blogObject) => {
+    blogService
+      .update(id, blogObject)
+      .then(returnedBlog => {
+        setBlogs(blogs.map(blog => blog.id !== id ? blog : returnedBlog))
+      })
+      .catch(error => {
+        setErrorMessage(
+          `Error adding like`
+        )
+        setTimeout(() => {setErrorMessage(null)}, 5000)
+      })
+  }
   
   if (user === null) {
   return (
@@ -93,7 +105,7 @@ const App = () => {
       </Togglable>
     
       {blogs.map((blog) => (
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} blogObject={handleLike} />
       ))}
       
       </div>

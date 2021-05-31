@@ -1,17 +1,23 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
-const Details = ({url, likes, user}) => {
+const Details = ({blog, blogObject}) => {
+
+  const handleLike = (event) => {
+    const updatedBlog = { ...blog, likes: blog.likes + 1}
+    blogObject(blog.id, updatedBlog)
+  }
+
   return (
     <>
-    <p>{url}</p>
-    <p>{likes}<button>likes</button></p>
-    <p>{user}</p>
+    <p>{blog.url}</p>
+    <p>{blog.likes}<button onClick={handleLike}>likes</button></p>
+    <p>{blog.user.username}</p>
     </>
   )
 
 }
 
-const Blog = ({blog}) => {
+const Blog = ({blog, blogObject}) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -35,7 +41,7 @@ const Blog = ({blog}) => {
   <div style={blogStyle}>
     <p>{blog.title} {blog.author} <button onClick={toggleVisibility} text={text}>{text}</button></p>
     {!detailsVisible ? null 
-    : <Details url={blog.url} likes={blog.likes} user={blog.user.username}/> }
+    : <Details blog={blog} blogObject={blogObject} /> }
   </div> 
   ) 
 }
