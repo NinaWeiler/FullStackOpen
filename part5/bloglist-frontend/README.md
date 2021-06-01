@@ -1,3 +1,13 @@
+# Bloglist frontend
+
+When running tests using Windows Powershell use command 
+```
+($env:CI = "true") -and (npm test)
+Windows (cmd.exe)
+```
+set CI=true&&npm test
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

@@ -1,28 +1,19 @@
 import React, { useState } from 'react'
 
-const Details = ({ blog, blogObject, user, blogToRemove }) => {
-
-  const handleLike = () => {
-    const updatedBlog = { ...blog, likes: blog.likes + 1 }
-    blogObject(blog.id, updatedBlog)
-  }
-
-  const handleDelete = () => {
-    blogToRemove(blog)
-  }
+const Details = ({ blog, user, handleLike, handleDelete }) => {
 
   return (
-    <>
+    <div className='details'>
       <p>{blog.url}</p>
-      <p>{blog.likes}<button onClick={handleLike}>likes</button></p>
+      <p>{blog.likes}<button onClick={handleLike}>like</button></p>
       <p>{blog.user.username}</p>
       {user !== blog.user.username ? null : <button onClick={handleDelete}>remove</button> }
-    </>
+    </div>
   )
 
 }
 
-const Blog = ({ blog, blogObject, blogToRemove, user }) => {
+const Blog = ({ blog, updateBlog, removeBlog, user }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -42,11 +33,20 @@ const Blog = ({ blog, blogObject, blogToRemove, user }) => {
     }
   }
 
+  const handleLike = () => {
+    const updatedBlog = { ...blog, likes: blog.likes + 1 }
+    updateBlog(blog.id, updatedBlog)
+  }
+
+  const handleDelete = () => {
+    removeBlog(blog)
+  }
+
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle} className='blog'>
       <p>{blog.title} {blog.author} <button onClick={toggleVisibility} text={text}>{text}</button></p>
       {!detailsVisible ? null
-        : <Details blog={blog} blogObject={blogObject} blogToRemove={blogToRemove} user={user}/> }
+        : <Details blog={blog} handleLike={handleLike} handleDelete={handleDelete} user={user}/> }
     </div>
   )
 }
