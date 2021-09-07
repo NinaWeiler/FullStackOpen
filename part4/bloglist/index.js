@@ -2,6 +2,7 @@ const app = require('./app') // the actual Express application
 const http = require('http')
 const config = require('./utils/config')
 const logger = require('./utils/logger')
+/*
 const mongoose = require('mongoose')
 
 
@@ -14,6 +15,7 @@ mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology
 	.catch((error) => {
 		logger.error('error connecting to MogoDB', error.message)
 	})
+	*/
 
 const server = http.createServer(app)
 
