@@ -1,5 +1,9 @@
 # Bloglist frontend
 
+Running cypress
+```
+npx cypress open
+
 When running tests using Windows Powershell use command 
 ```
 ($env:CI = "true") -and (npm test)
