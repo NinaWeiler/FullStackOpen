@@ -19,7 +19,7 @@ const App = () => {
   const [user, setUser] = useState(null)
 
   useEffect(() => {
-    blogService.getAll().then((blogs) => setBlogs(blogs))
+    blogService.getAll().then((blogs) => setBlogs(blogs.sort((a, b) => b.likes - a.likes)))
   }, [])
 
   useEffect(() => {
@@ -32,10 +32,6 @@ const App = () => {
   }, [])
 
   const blogFormRef = useRef()
-
-  useEffect(() => {
-    setBlogs(blogs.sort((a, b) => b.likes - a.likes))
-  }, [blogs])
 
 
   const handleLogin = async (event) => {
