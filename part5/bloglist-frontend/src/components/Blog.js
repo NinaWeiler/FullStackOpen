@@ -3,9 +3,9 @@ import React, { useState } from 'react'
 const Details = ({ blog, user, handleLike, handleDelete }) => {
 
   return (
-    <div className='details'>
+    <div className='details'  id='details'>
       <p>{blog.url}</p>
-      <p>{blog.likes}<button onClick={handleLike}>like</button></p>
+      <p>{blog.likes}<button id='like' onClick={handleLike}>like</button></p>
       <p>{blog.user.username}</p>
       {user !== blog.user.username ? null : <button onClick={handleDelete}>remove</button> }
     </div>
