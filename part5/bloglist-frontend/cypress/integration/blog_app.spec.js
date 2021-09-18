@@ -104,6 +104,43 @@ describe('Blog app', function () {
 
       })
     })
+
+    describe('and several blogs exist', function() {
+      beforeEach(function() {
+        cy.createBlog({
+          title: 'Plants basics',
+          author: 'Mariana Foster',
+          url: 'www.fosters.com/plants',
+          likes: 20
+        })
+        cy.createBlog({
+          title: 'Wrestling',
+          author: 'Jasper Foster',
+          url: 'www.fosters.com/wrestling',
+          likes: 5
+        })
+        cy.createBlog({
+          title: 'Piano for dummies',
+          author: 'Brandon Foster',
+          url: 'www.fosters.com/piano',
+          likes: 19
+        })
+      })
+
+      it('blogs are ordered according to likes, from most to last', function() {
+        cy.request('GET', 'http://localhost:3003/api/blogs').then((response) => {
+          const data = response.body
+          expect(data).to.have.length(3)
+        })
+
+        cy.get('.showButton').should('have.length', 3).click({ multiple: true })
+        cy.get('.amountOfLikes').then((likes) => {
+          expect(likes[0]).to.contain(20)
+          expect(likes[1]).to.contain(19)
+          expect(likes[2]).to.contain(5)
+        })
+      })
+    })
   })
 
 })

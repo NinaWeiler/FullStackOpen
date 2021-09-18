@@ -5,7 +5,7 @@ const Details = ({ blog, user, handleLike, handleDelete }) => {
   return (
     <div className='details'  id='details'>
       <p>{blog.url}</p>
-      <p>{blog.likes}<button id='like' onClick={handleLike}>like</button></p>
+      <p className='amountOfLikes'>{blog.likes}<button id='like' onClick={handleLike}>like</button></p>
       <p>{blog.user.username}</p>
       {user !== blog.user.username ? null : <button onClick={handleDelete}>remove</button> }
     </div>
@@ -44,7 +44,7 @@ const Blog = ({ blog, updateBlog, removeBlog, user }) => {
 
   return (
     <div style={blogStyle} className='blog'>
-      <p>{blog.title} {blog.author} <button onClick={toggleVisibility} text={text}>{text}</button></p>
+      <p>{blog.title} {blog.author} <button className='showButton' id='show' onClick={toggleVisibility} text={text}>{text}</button></p>
       {!detailsVisible ? null
         : <Details blog={blog} handleLike={handleLike} handleDelete={handleDelete} user={user}/> }
     </div>
