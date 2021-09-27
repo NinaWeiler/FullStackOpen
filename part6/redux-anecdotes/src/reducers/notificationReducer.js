@@ -1,26 +1,40 @@
-const notificationsAtStart = [
-  "What a great message",
-];
 
-
-const asObject = (notification) => {
-  return {
-    content: notification,
-  };
-};
-
-const initialState = notificationsAtStart.map(asObject);
-
-const notificationReducer = (state = notificationsAtStart, action) => {
+const notificationReducer = (state = null, action) => {
   console.log("state now: ", state);
   console.log("action", action);
   switch (action.type) {
-    case "NEW_ANECDOTE":
-      return [...state, action.data];
+    case 'SHOW':
+      return action.data
+    case 'HIDE':
+      return null
     default:
       return state;
   }
 };
 
+
+const showNotification = (text) => {
+  return {
+    type: 'SHOW',
+    data: text 
+  }
+}
+
+const hideNotification = () => {
+  return {
+    type: 'HIDE'
+  }
+}
+
+export function showNotificationWithTimeOut(text) {
+  return function (dispatch) {
+    dispatch(showNotification(text))
+
+    setTimeout(() => {
+      dispatch(hideNotification())
+    }, 5000)
+  }
+  
+}
 
 export default notificationReducer
