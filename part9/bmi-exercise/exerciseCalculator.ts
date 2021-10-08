@@ -8,7 +8,12 @@ interface Result {
     average: number
 }
 
-const calculateExercises = (trainingPeriod: Array<number>, target: number): Result => {
+interface Arguments {
+    target: number, 
+    trainingPeriod: Array<number>
+}
+
+const calculateExercises = (target: number, trainingPeriod: Array<number>): Result => {
     let rating
     let ratingDescription
     const trainingDays = trainingPeriod.filter(p => p > 0)
@@ -36,4 +41,26 @@ const calculateExercises = (trainingPeriod: Array<number>, target: number): Resu
     }
 }
 
-console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 2))
+const parseValues = (args: Array<string>): Arguments => {
+    if (args.length < 4) throw new Error('Not enough values');
+    
+    let hours = []
+    for (let i = 2; i < args.length; i++) {
+        if (isNaN(Number(args[i]))) {
+            throw new Error('Provided values were not numbers')
+        } else {
+            hours.push(Number(args[i]))
+        }
+    }
+    return {
+        target: hours.shift(),
+        trainingPeriod: hours
+    }
+}
+
+try {
+    let input = parseValues(process.argv)
+    console.log(calculateExercises(input.target, input.trainingPeriod))
+} catch (e) {
+    console.log('Error calculating exercises')
+}

@@ -1,4 +1,8 @@
 type Value = string
+interface CalculateValues {
+    height: number,
+    weight: number
+}
 
 const calculateBmi = (height: number, weight: number): Value => {
     let bmi = (weight / height / height) * 10000
@@ -14,4 +18,22 @@ const calculateBmi = (height: number, weight: number): Value => {
     return 'Could not calculate bmi'
 }
 
-console.log(calculateBmi(180, 74))
+const parseArguments = (args: Array<string>): CalculateValues => {
+    if (args.length != 4) throw new Error('Example input in cm and kg: 180 60')
+
+    if (!isNaN(Number(args[2])) && (!isNaN(Number(args[3])))) {
+        return {
+            height: Number(args[2]),
+            weight: Number(args[3])
+        }
+    } else {
+        throw new Error('Provided values were not numbers')
+    }
+}
+
+try {
+    const {height, weight} = parseArguments(process.argv)
+    console.log(calculateBmi(height, weight))
+} catch (e) {
+    console.log('Error', e.message)
+}
