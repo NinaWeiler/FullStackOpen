@@ -53,7 +53,7 @@ const parseValues = (args: Array<string>): Arguments => {
         }
     }
     return {
-        target: hours.shift(),
+        target: hours.shift() || 0,
         trainingPeriod: hours
     }
 }
