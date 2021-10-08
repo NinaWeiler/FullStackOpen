@@ -1,6 +1,6 @@
-type Result = string
+type Value = string
 
-const calculateBmi = (height: number, weight: number): Result => {
+const calculateBmi = (height: number, weight: number): Value => {
     let bmi = (weight / height / height) * 10000
     if (bmi >= 18.5 && bmi <= 24.9) {
         return 'Normal (healthy weight)'
