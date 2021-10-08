@@ -13,7 +13,7 @@ const AnecdoteList = () => {
   const vote = (id, content) => {
     console.log("vote", id);
     dispatch(toggleVote(id));
-    dispatch(showNotificationWithTimeOut(`You voted for "${content}"`))
+    dispatch(showNotificationWithTimeOut(`You voted for "${content}"`, 5))
   };
 
   const orderedAnecdotes = anecdotes.sort((a, b) => b.votes - a.votes);

@@ -26,13 +26,13 @@ const hideNotification = () => {
   }
 }
 
-export function showNotificationWithTimeOut(text) {
+export function showNotificationWithTimeOut(text, time) {
   return function (dispatch) {
     dispatch(showNotification(text))
 
     setTimeout(() => {
       dispatch(hideNotification())
-    }, 5000)
+    }, time * 1000)
   }
   
 }
