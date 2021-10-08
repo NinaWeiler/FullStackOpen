@@ -4,7 +4,7 @@ interface CalculateValues {
     weight: number
 }
 
-const calculateBmi = (height: number, weight: number): Value => {
+export const calculateBmi = (height: number, weight: number): Value => {
     let bmi = (weight / height / height) * 10000
     if (bmi >= 18.5 && bmi <= 24.9) {
         return 'Normal (healthy weight)'
