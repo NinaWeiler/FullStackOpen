@@ -13,21 +13,21 @@ interface Arguments {
     trainingPeriod: Array<number>
 }
 
-const calculateExercises = (target: number, trainingPeriod: Array<number>): Result => {
-    let rating
-    let ratingDescription
-    const trainingDays = trainingPeriod.filter(p => p > 0)
-    const average = trainingPeriod.reduce((a, b) => a + b) / trainingPeriod.length
-    const success = (average >= target) ? true : false
+export const calculateExercises = (target: number, trainingPeriod: Array<number>): Result => {
+    let rating;
+    let ratingDescription;
+    const trainingDays = trainingPeriod.filter(p => p > 0);
+    const average = trainingPeriod.reduce((a, b) => a + b) / trainingPeriod.length;
+    const success = (average >= target) ? true : false;
     if (success) {
-        rating = 3
-        ratingDescription = 'Well done, you reached your target'
+        rating = 3;
+        ratingDescription = 'Well done, you reached your target';
     } else if ((target - average) < 0.5) {
-        rating = 2
-        ratingDescription = 'You nearly reached your target'
+        rating = 2;
+        ratingDescription = 'You nearly reached your target';
     } else {
-        rating = 1
-        ratingDescription = 'You have some catching up to do'
+        rating = 1;
+        ratingDescription = 'You have some catching up to do';
     }
 
     return {
@@ -38,29 +38,29 @@ const calculateExercises = (target: number, trainingPeriod: Array<number>): Resu
         ratingDescription: ratingDescription,
         target: target,
         average: average,
-    }
-}
+    };
+};
 
 const parseValues = (args: Array<string>): Arguments => {
     if (args.length < 4) throw new Error('Not enough values');
     
-    let hours = []
+    const hours = [];
     for (let i = 2; i < args.length; i++) {
         if (isNaN(Number(args[i]))) {
-            throw new Error('Provided values were not numbers')
+            throw new Error('Provided values were not numbers');
         } else {
-            hours.push(Number(args[i]))
+            hours.push(Number(args[i]));
         }
     }
     return {
         target: hours.shift() || 0,
         trainingPeriod: hours
-    }
-}
+    };
+};
 
 try {
-    let input = parseValues(process.argv)
-    console.log(calculateExercises(input.target, input.trainingPeriod))
+    const input = parseValues(process.argv);
+    console.log(calculateExercises(input.target, input.trainingPeriod));
 } catch (e) {
-    console.log('Error calculating exercises')
+    console.log('Error calculating exercises');
 }
