@@ -12,7 +12,7 @@ const reducer = combineReducers({
     filter: filterReducer
 })
 
-const store = createStore(reducer,  applyMiddleware(thunk), composeWithDevTools())
+const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)))
 
 
 

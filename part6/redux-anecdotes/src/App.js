@@ -10,10 +10,8 @@ import anecdoteService from './services/anecdotes'
 const App = () => {
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    anecdoteService.getAll().then(anecdotes => 
-      dispatch(initializeAnecdotes(anecdotes))
-  )
+  useEffect(() => { 
+      dispatch(initializeAnecdotes())
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
